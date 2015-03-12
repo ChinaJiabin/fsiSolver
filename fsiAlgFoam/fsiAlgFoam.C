@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
 #   include "createZoneToZoneInterpolators.H"
 #   include "initContinuityErrs.H"
 #   include "findGlobalFaceZones.H"
-#   include "CreateExtraplolationField.H"          
+#   include "createExtraplolationField.H"          
 //* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
     Info << "\nStarting time loop\n" << endl;
