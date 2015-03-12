@@ -250,9 +250,3 @@ def createBall(radius, unitLen, oGridRatio = 0.8):
   edgeType = ['arc']*len(edgePoints)
 
   return mesh(points, blocks, len(blocks)*[[2,2,2]], len(blocks)*[[1,1,1]], edgePointsId, edgePoints, edgeType)
-
-
-
-
-
-  
