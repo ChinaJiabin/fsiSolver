@@ -1,0 +1,2 @@
+faceSet plateZone new patchToFace plate
+pointSet fsiPoints new faceToPoint plateZone all

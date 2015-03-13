@@ -1,0 +1,66 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | foam-extend: Open Source CFD                    |
+|  \\    /   O peration     | Version:     3.0                                |
+|   \\  /    A nd           | Web:         http://www.extend-project.de       |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      couplingProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+solidPatch plate;
+solidZone plateZone;
+
+fluidPatch plate;
+fluidZone plateZone;
+
+
+fsiRelaxationFactor 0.01;
+
+interfaceDeformationLimit 0.01;
+
+outerCorrTolerance 1e-2;
+
+nOuterCorr 25;
+
+fsiMeshMerge no;
+fsiMeshMergeTolerance 1e-5;
+
+couplingScheme IQN-ILS;//IQN-ILS;
+
+fsi yes;
+
+Aitken
+{
+  maxRelaxFactor 1;
+}
+
+IQN-ILS
+{
+  dim        2;
+  maxColumn  5;
+}
+
+IQN-ILSVarRelaxing
+{
+  dim                  3;
+  maxColumn            5;
+  startRelaxFactor   0.3;
+  maxRelaxFactor     0.3;
+}
+
+Mix-Aitken-IQN
+{
+  maxRelaxFactor      0.1;
+  numSubStepsForAitken 15;
+  dim                   3;
+  maxColumn             5;
+}
+// ************************************************************************* //

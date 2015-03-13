@@ -1,0 +1,76 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | foam-extend: Open Source CFD                    |
+|  \\    /   O peration     | Version:     3.0                                |
+|   \\  /    A nd           | Web:         http://www.extend-project.de       |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      dynamicMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dynamicFvMesh   dynamicMotionSolverFvMesh;
+
+twoDMotion      yes;
+
+//solver          velocityLaplacian;
+solver          laplace;
+
+diffusivity quadratic inverseDistance 1(plate);
+
+frozenDiffusion yes;
+
+distancePatches
+(
+    plate
+);
+
+/*
+dynamicFvMesh dynamicMotionSolverFvMesh;
+
+twoDMotion      yes;
+
+solver RBFMotionSolver;
+
+movingPatches ( plate );
+
+staticPatches ( inlet outlet cylinder bottom top );
+
+coarseningRatio 3;
+
+includeStaticPatches   no;
+frozenInterpolation    no;
+
+interpolation
+{
+    RBF  IMQB;
+    focalPoint (0.425 0.2 0);
+    innerRadius 0.175;
+    outerRadius 0.6;
+    polynomials true;
+
+    W2Coeffs
+    {
+        radius     1.0;
+    }
+    TPSCoeffs
+    {
+        radius     5.0;
+    }
+    GaussCoeffs
+    {
+        radius     0.1;
+    }
+    IMQBCoeffs
+    {
+        radius     0.001;
+    }
+}
+*/
+// ************************************************************************* //
