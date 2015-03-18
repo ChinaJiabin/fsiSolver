@@ -1,0 +1,261 @@
+                         matlab常见问题及解答：
+1.基本操作问题
+  a.工作区重置即恢复到默认状态
+  答：Desktop->Desktop Layout->default
+  b.文件夹add to path
+  答：选中文件夹右键
+      add to path->
+  c.强行中断循环
+  答：ctrl+c
+  d.如何查看系统函数的源代码
+  type magic                        %查看函数magic的源代码
+  clc                               %清空command window
+  clear                             %清空workspace
+
+2. 工具箱
+   (1).symbolic math toolbox
+       mupad
+   (2).cftool
+
+3.解线性方程Ax=b
+  a.直接法：x=A\b;
+  b.LU分解法：[L,U]=lu(A),x=U\(L\b);
+  c.若A是对称正定阵则：可以乔雷斯基分解
+    R=chol(A); x=R\(R'\b);
+
+4.矩阵的基本操作
+  >>eye(n)                          %生成n维单位阵
+  >>ones(n,m)                       %生成元素全为一的矩阵
+  >>zeros(n,m)                      %生成元素全为零的矩阵
+  >>tril(A)                         %返回矩阵A的下三角矩阵
+  >>triu(A)                         %返回矩阵A的上三角矩阵
+  >>diag(A)                         %返回矩阵A对角元素组成的向量
+  >>diag(v)                         %生成以v向量中元素为对角元素的对角阵
+  >>[L,U]=lu(A)                     %对矩阵A进行LU分解      
+  >>rot90(A,k)                      %逆时针旋转k*90度
+  >>rank(A)                         %返回矩阵的秩   
+  >>repmat                          %Replicate and tile array             
+  >>fliplr(A)                       %矩阵A左右翻转
+  >>flipud(A)                       %矩阵A上下翻转
+  >>norm(A)                         %求矩阵A范数
+  >>sort(A)                         %对矩阵的每一列向量排序
+  >>sparse                          %建立稀疏矩阵
+  >>speye(n)                        %生成n×n的单位稀疏矩阵.
+  >>[v,d]=eig(A)                    %A为矩阵，v为特征向量矩阵（一列对应一个特征向量），d为特征值矩阵
+  >>toeplitz(r)                     %返回对称的Toeplitz矩阵，r是矩阵的第一行
+  >>toeplitz(c,r)                   %返回非对称的toeplitz矩阵，c是矩阵的第一列，r是矩阵的第一行
+  >>spy(A)                          %矩阵形态
+   
+  >>speye()                         %稀疏矩阵
+  >>spdiags() ??????????????????????????
+  >>symamd()  ??????????????????????????
+ 
+ 
+  >>[D,p]chol()                   %如果矩阵X是对称正定的，则p=0,Cholesky分解将矩阵X分解成一个下三角矩阵和上三角矩阵的乘积
+
+集合运算(vector)
+
+intersect:集合交集
+ismember :是否集合中元素
+ setdiff : 集合差集
+  setxor : 集合异或(不在交集中的元素)
+   union :  两个集合的并
+  unique :返回向量作为一个集合所有元素(去掉相同元素)
+
+5.多项式
+a.基本运算：
+  >> plot(x,y,x,f);                 %画图，拟合曲线和真实曲线比较% 
+  >>conv(p,q)                       %多项式乘法
+  >>[k,r]=deconv(p,q)               %多项式除法，k=p/q的商，r是余式
+  >>polyder(p)                      %多项式的一阶导数
+  >>ployder(p,q)                    %p与q乘积的一阶导数 
+  >>polyval(p,x)                    %返回多项式p在x点的值
+  >>[k,d]=polyder(p,q)              %p/q的导数，k是分子，d是分母
+  >>p=ploy(x)                       %p(x)=(x-x1)(x-x2)(x-x3)...(x-xn)
+  >>interp1(x,y,x_new)
+
+b.拟合：
+  这里给出一个实例，在区间[0,4]上线性拟合sin(x)，并画图比较：
+  >> x=0:0.01:4;
+  >> y=sin(x);
+  >> p=polyfit(x,y,1);             %返回线性多项式拟合系数组成的行向量
+  >> f=polyval(p,x);               %返回多项式p在x处的值
+
+  
+
+6.符号运算
+  >>syms                           %定义符号变量
+
+7.并行运算
+  labindex
+  numlabs
+  getLocalPart
+
+8.格式问题
+  >> format long                   %保留15位小数
+  >> format short                  %保留4位小数
+  >> format rat                    %分数形式
+  >> num2str                       %将数字转化为字符串
+  >> str2mat                       %将字符串转化为矩阵
+  >> logical                       %Convert numeric values to logical                 
+                                   %x=[1;0;1] is logical;则~x=[0;1;0] is also a logical
+                                   %p>=1 is logical,but(p>=1)-1 is number
+  >>fprintf                        %将数据写入文本文件
+  >>print                          %Print figure or save to file
+    print(gcf,'-dpng','abc.png')
+  >>sprintf                        %Format data into string
+  >>exist                          %Check existence of variable, function, folder, or class
+
+9.常见
+  a.for k=n:1   实现n n-1...1的循环
+    matlab的矩阵运算效率要优于循环效率，见test.m:test(10000)运算结果：矩阵运算:0.565822seconds，循环运算:24.152359seconds
+
+  b.循环程序问题：两个条件:并 用&;或 用|
+    
+    跳出for循环：break
+
+    不等于的条件：~=
+
+    输出一段话：disp('I love matlab')
+
+    运行一段代码所需时间：tic+代码+toc
+
+    运用function handle 把函数作为变量使用，例：f=@(z)z^3-1
+
+    nargin  用来判断输入变量个数的函数
+
+   后缀.asv是什么文件
+   答：autosave是.m文件自动保存时产生的临时文件，程序非正常退出的时用于恢复
+      在file-preference-Editor/debugger-autosave更改设置
+
+  在程序引入错误检测:即当不符合条件时停止程序，输出错误信息。？？？
+
+   一个m文件能否定义多个函数
+   答：能
+
+  c.反三角函数：asin()、acos()、atan()
+      伽玛函数：gamma()
+    
+
+11.表达式
+   a.A,B均为[m,n]矩阵对应元素相乘/相除
+   答：A.*b;A./b
+   b.函数：1/x*sin(x)
+   答：inline（1./x.*sin(1./x);
+   c.A,B对应行\列相加
+   答：A[n,:]+B[n,:] \ A[:,n]+B[:,n]
+   d.
+
+12.关于plot
+  相关主题：
+  LineSpec:Line Specification
+  >>xlabel('')                     %x坐标标题
+  >>ylabel('')                     %y坐标标题
+  >>legand()
+  >>grid on/off                    %加/去网格
+
+13.文件管理
+  >>dir('*.m')                     %列出当前目录下符合正则表达式的文件夹和文件
+
+
+
+15.随机性问题：
+   1.随机函数：
+    >>rand(n)                        %返回值在[0,1]间的n阶实数矩阵,[0,1]均匀分布
+    >>randi(imax，n)                 %返回值在[1，imax]间的n阶正数数矩阵，[0,1]均匀分布
+    >>randint(n,m,[N,M])             %返回值在[N,M]间的[n,m]矩阵，[0,1]均匀分布
+    >>unifrnd(N,M,n,m)               %返回值在[N,M]间连续分布的[n,m]矩阵，[0,1]均匀分布
+    >>randn(1,m)                     % 服从标准正态分布N(0,1)的m维随机数行向量。
+    >>mu+sigma.*randn(1,m)           % m个服从N(mu,sigma^2)分布的随机数
+    >>randperm                       % rand permutation
+ 
+   2.常用统计函数：
+    >>mean(x)                        %返回平均值
+    >>median(x)                      %返回中间值
+    >>std(x)                         %返回均方差
+    >>var(x)                         %返回方差
+    >>统计矩阵中元素等于2的元素个数    %返回B=A==2;sum(sum(B))
+    >>corrcoef(x,y)                  %返回两组数据的相关系数
+    >>tabulate                       %统计元素个数   
+    >>hist                           %绘制直方图，查看数据的分布情况
+    http://blog.163.com/zzz216@yeah/blog/static/16255468420128238492884/
+
+   3.用[0,1]上的均匀分布产生各种分布
+      0-1分布:(rand(1,m)<=p);        %生成m 个以概率p 为1，概率1-p 为0 的随机数（m 维行向量）
+      二项分布:sum(rand(n,m)<=p)     %x是服从二项分布(n,p)的m维随机数向量          
+
+   5.与时间序列有关的函数
+   max        最大值             range        极差  
+   min        最小值             size       一维序列长度             
+   mean       平均值             length     二维序列长度
+   median     中位数             norm        序列的模
+   sum        总和数             cumsum      累积总和值
+   geomean    几何平均           cumprod     累积连乘值
+   trimmean   截尾求算数平均值    harmmen     调和均值
+   prod       连乘数             prctile     百分位数
+   sort       排序
+   wrev       逆序排列
+   issorted   是否按升序排列
+   unique     按互异元素进行排序
+   wkeep      提取时间序列的一个子序列
+   conv       一维卷积
+   convn      多维卷积
+
+   cconv      循环卷积        % fft(cconv(f1,f2))=fft(f1).*fft(f2)
+                             % 计算线性卷积时，可将f1 f2补零，再利用fft计算
+
+18.分段插值
+ yi = interp1(x,Y,xi)             %分段线性插值
+ yi = interp1(x,Y,xi,'spline')    %三次样条插值
+
+19.微分方程的解法：
+   ode23, ode45, ode113, ode15s（刚性问题）, ode23s, ode23t, ode23tb
+
+20.画图及图像处理：
+     imshow(flower)                                        %显示图片flower                   
+     imtransform()                                         %对图片做仿射变换:affine,投影变换:projective,自定义变换:custom.                  
+                                                           %详见http://blog.sina.com.cn/s/blog_6163bdeb0102du23.html
+     cmap=colormap                                         %cmap为色图实数矩阵，实数的大小在0到1.0之间，每一行是定义一种颜色的一个RGB向量     
+                                                           % 详见http://hi.baidu.com/carniyang/blog/item/0f259a3ba577973f96ddd802.html
+     colormap(map)                                         %选用map配色方案(colorbar)
+     [1 0 0]->red [0 1 0]->green [0 0 1]->blue             %
+     A=randint(7)                                          %产生随机的0-1矩阵
+     imshow(A,'InitialMagnification','fit')                %显示该二值图像
+     ginput                                                %Graphical input from mouse or cursor
+     legend('data1')                                       %图例
+     subplot('position',[a b c d])                         %(a,b)是左下角坐标，c=方框的x轴长度，d=方框的y轴长度；0<=a<=1,0<=b<=1
+     loglog()                                              %Y=X.^1/2,化为了Y=1/2*X
+     semilogy()                                            %Y=10^x,化为了Y=X
+     semilogx()                                            %Y=log(x),化为了Y=X
+     gca                                                   %Current axes handle
+     gcf                                                   %Current figure handle
+     quiver3                                               %3-D quiver or velocity plot
+
+     曲线点标记
+     实点标记        .           实线    —（默认）                            LineStyle：线形
+     圆圈标记        o           虚线    --                                    LineWidth：线宽
+     叉号标记        X           冒号线   ：                                    Color：颜色
+     星号标记        *           点划线   —.                                  MarkerType：标记点的形状
+     钻石型标记      d           颜色：y \m\ \c\  \r\ \g\  \b\ \w\   \k\       MarkerSize：标记点的大小
+     下三角标记      v                黄  粉 亮蓝 大红 绿色 蓝色 白色  黑色     MarkerFaceColor：标记点内部的填充颜色
+     上三角标记      ^                                                        MarkerEdgeColor：标记点边缘的颜色                                                                                                      
+     左三角标记      <              '-o'前面加-表示o与o之间用-连接
+     右三角标记      >                                                        fontsize:字体大小                   
+     五角星标记      p
+     六角星标记      h
+     正方形标记      s
+     加号标记        +
+ 
+    colormap: jet hsv hot cool spring summer autumn winter gray bone copper pink lines
+
+21.GUI
+Style:text\edit\popup
+
+
+
+
+
+  
+
+
+
